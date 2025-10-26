@@ -6277,3 +6277,17 @@ nav a#pull {
 
 
 
+/* ==============================================================
+  CUSTOM: Forzar que cada fila del menú tenga solo 3 elementos
+  Aplica a secciones #menu-6 y #menu-8 sin tocar otros usos de col-lg-3
+================================================== */
+@media (min-width: 992px) {
+  #menu-6 .row > [class*="col-lg-3"],
+  #menu-8 .row > [class*="col-lg-3"] {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
+
+
