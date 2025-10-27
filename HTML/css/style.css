@@ -6289,5 +6289,47 @@ nav a#pull {
   }
 }
 
+/* Tamaño uniforme para imágenes destacadas del menú inicial */
+.menu-feature-img {
+  width: 100%;
+  height: 260px; /* Altura fija para homogeneizar */
+  object-fit: cover; /* Recorta manteniendo proporción y centra */
+  display: block;
+}
+
+/* Estilos para íconos de redes sociales en footer */
+.social-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f8f9fa;
+  border: 2px solid #000;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background-color: #ffc107;
+  transform: translateY(-2px);
+}
+
+.social-links a i {
+  font-size: 18px;
+  color: #333;
+}
+
+.social-links a:hover i {
+  color: #fff;
+}
+
 
 
