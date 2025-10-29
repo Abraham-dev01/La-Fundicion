@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Sucursal Reforma",
+        "top": "5%",
+        "left": "54%",
+        "info": "Edificio de oficinas con arquitectura moderna.",
+        "address": "Calle Álamos #450, Colonia Reforma",
+        "link_maps": "https://maps.app.goo.gl/xCS4PsYyp8WsjTnC9",
+        "image": "./images/Fondo-div-info.png"
+    },
+    {
+        "name": "Sucursal San Martín",
+        "top": "52%",
+        "left": "15%",
+        "info": "Centro comercial con tiendas y restaurantes.",
+        "address": "Carretera Internacional Km 130, Colonia Centro",
+        "link_maps": "https://maps.app.goo.gl/Cfx8zjneRhvBEFMQ9",
+        "image": "./images/Fondo-div-info.png"
+    },
+    {
+        "name": "Sucursal Centro",
+        "top": "33%",
+        "left": "45%",
+        "info": "Zona residencial con amplias áreas verdes.",
+        "address": "Calle Álamos #450, Colonia Reforma",
+        "link_maps": "https://maps.app.goo.gl/RrPyL556LtL4jtvSA",
+        "image": "./images/Fondo-div-info.png"
+    },
+    {
+        "name": "Sucursal Plaza del Valle",
+        "top": "61%",
+        "left": "47%",
+        "info": "Zona residencial con amplias áreas verdes.",
+        "address": "Fiallo #450, Colonia Centro",
+        "link_maps": "https://maps.app.goo.gl/413MmaohaySkV1X56",
+        "image": "./images/Fondo-div-info.png"
+    }
+]
