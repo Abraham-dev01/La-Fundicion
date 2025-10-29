@@ -332,13 +332,14 @@ function addMarkers(locations) {
       fundidorElement = fundidorImg;
       fundidorAdded = true;
 
-      // Alinear el fundidor a la esquina inferior derecha de la imagen del mapa
+      // Tamaño inicial corregido para el fundidor
       function positionFundidor() {
         const mapaFondo = document.getElementById('mapa-fondo');
         if (!mapaFondo) return;
         const fondoRect = mapaFondo.getBoundingClientRect();
-        const containerRect = mapaContainer.getBoundingClientRect();
-        // Calcula la posición relativa dentro del mapa
+        // El tamaño debe ser aprox. 45% de la altura del mapa
+        fundidorImg.style.height = `${fondoRect.height * 0.8}px`;
+        // Alinear a la esquina inferior derecha de la imagen del mapa
         const left = fondoRect.width - fundidorImg.offsetWidth;
         const top = fondoRect.height - fundidorImg.offsetHeight;
         fundidorImg.style.left = `${left}px`;
