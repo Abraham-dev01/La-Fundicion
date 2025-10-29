@@ -16,7 +16,7 @@ function cargarMarcadores() {
       },
       {
         name: "Sucursal Centro",
-        top: "46%",
+        top: "26%",
         left: "19%",
         info: "Zona residencial con amplias áreas verdes.",
         address: "Calle Álamos #450, Colonia Reforma",
