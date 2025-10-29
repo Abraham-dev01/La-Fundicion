@@ -437,10 +437,10 @@
 				}
 			},
 			messages: {
-				select: "This field is required",
-				name: "Please enter your name",
-				email: "We need your email address to contact you",
-				phone: "Please enter a valid number",
+				select: "Este campo es obligatorio",
+				name: "Por favor ingresa tu nombre",
+				email: "Necesitamos tu dirección de correo electrónico para contactarte",
+				phone: "Por favor ingresa un número válido",
 			}
 		});
 
@@ -467,14 +467,14 @@
 					},
 					messages:{
 							name:{
-								required: "Please enter no less than (1) characters"
+								required: "Por favor ingresa más de 1 caracter"
 							}, 
 							email:{
-								required: "We need your email address to contact you",
-								email: "Your email address must be in the format of name@domain.com"
+								required: "Necesitamos tu dirección de correo electrónico para contactarte",
+								email: "Tu dirección de correo electrónico debe estar en el formato de name@domain.com"
 							}, 
 							message:{
-								required: "Please enter no less than (2) characters"
+								required: "Por favor ingresa más de 2 caracteres"
 							}, 
 						}
 		});
