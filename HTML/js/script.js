@@ -97,6 +97,15 @@ function addMarkers(locations) {
     marker.src = "./images/locations/images/Hamburguesa.png";
     marker.alt = "Ubicación";
 
+    // Tamaño correcto para hamburguesa en móvil
+    if (window.innerWidth <= 460) {
+      marker.style.width = "40px";
+      marker.style.height = "40px";
+    } else {
+      marker.style.width = "8%";
+      marker.style.height = "auto";
+    }
+
     // Convertir los valores top/left a píxeles basados en el tamaño actual del mapa
     const top = (parseFloat(location.top) / 100) * mapHeight;
     const left = (parseFloat(location.left) / 100) * mapWidth;
@@ -127,10 +136,28 @@ function addMarkers(locations) {
 
     // Crear el div de detalles
     const detailsDiv = document.createElement("div");
-    detailsDiv.classList.add("project-details");
-    detailsDiv.style.position = "absolute";
-    detailsDiv.style.opacity = "0";
-    detailsDiv.style.transition = "opacity 0.2s ease";
+    if (window.innerWidth <= 460) {
+      detailsDiv.style.position = "fixed";
+      detailsDiv.style.top = "50%";
+      detailsDiv.style.left = "50%";
+      detailsDiv.style.transform = "translate(-50%, -50%)";
+      detailsDiv.style.width = "80vw";
+      detailsDiv.style.height = "auto";
+      detailsDiv.style.backgroundColor = "white";
+      detailsDiv.style.zIndex = "999";
+      detailsDiv.style.display = "flex";
+      detailsDiv.style.flexDirection = "column";
+      detailsDiv.style.justifyContent = "flex-start";
+      detailsDiv.style.borderRadius = "8px";
+      // hamburguesa pequeña en móvil
+      marker.style.width = "12vw";
+      marker.style.height = "auto";
+    } else {
+      detailsDiv.classList.add("project-details");
+      detailsDiv.style.position = "absolute";
+      detailsDiv.style.opacity = "0";
+      detailsDiv.style.transition = "opacity 0.2s ease";
+    }
     detailsDiv.style.display = "none";
 
     // Posicionamiento dinámico de la tarjeta cerca del marcador
@@ -298,15 +325,29 @@ function addMarkers(locations) {
       fundidorImg.src = "./images/locations/images/Fundidor_color.png";
       fundidorImg.alt = "Fundidor";
       fundidorImg.style.position = "absolute";
-      fundidorImg.style.top = `${0.11 * mapHeight}px`;
-      fundidorImg.style.right = `${0.01 * mapWidth}px`;
       fundidorImg.style.zIndex = "15";
       fundidorImg.style.width = "auto";
-      fundidorImg.style.height = `${0.8 * mapHeight}px`;
       fundidorImg.style.pointerEvents = "none";
       container.appendChild(fundidorImg);
       fundidorElement = fundidorImg;
       fundidorAdded = true;
+
+      // Función para alinear y escalar el fundidor
+      function positionFundidor() {
+        const mapWidth = mapaContainer.offsetWidth;
+        const mapHeight = mapaContainer.offsetHeight;
+        const scrollX = document.getElementById('scroll-wrapper').scrollLeft || 0;
+        // Escala dinámica: más pequeño si la pantalla es estrecha
+        let scale = 0.8;
+        if (mapWidth < 900) scale = 0.5;
+        if (mapWidth < 600) scale = 0.35;
+        fundidorImg.style.height = `${scale * mapHeight}px`;
+        fundidorImg.style.left = `${mapWidth - fundidorImg.offsetWidth - scrollX}px`;
+        fundidorImg.style.top = `${mapHeight - fundidorImg.offsetHeight}px`;
+      }
+      window.addEventListener('resize', positionFundidor);
+      document.getElementById('scroll-wrapper').addEventListener('scroll', positionFundidor);
+      setTimeout(positionFundidor, 50);
     }
   });
 }
