@@ -12,7 +12,7 @@ function cargarMarcadores() {
         info: "Edificio de oficinas con arquitectura moderna.",
         address: "Calle Álamos #450, Colonia Reforma",
         link_maps: "https://maps.app.goo.gl/xCS4PsYyp8WsjTnC9",
-        image: "./locations/images/Fondo-div-info.png",
+        image: "./images/Fondo-div-info.png",
       },
       {
         name: "Sucursal San Martín",
@@ -44,7 +44,7 @@ function cargarMarcadores() {
     ];
     addMarkers(mobileLocations);
   } else {
-    fetch("./json/locations.json")
+  fetch("./images/locations/json/locations.json")
       .then((response) => {
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -74,7 +74,7 @@ function addMarkers(locations) {
     // Crear un marcador (imagen)
     const marker = document.createElement("img");
     marker.classList.add("hamburguesa");
-    marker.src = "./images/Hamburguesa.png";
+    marker.src = "./images/locations/images/Hamburguesa.png";
     marker.alt = "Ubicación";
 
     // Convertir los valores top/left a píxeles basados en el tamaño actual del contenedor
@@ -145,7 +145,12 @@ function addMarkers(locations) {
 
     if (location.image) {
       const customImage = document.createElement("img");
-      customImage.src = location.image;
+
+      if (location.image.startsWith("./")) {
+        customImage.src = location.image.replace("./images/", "./images/locations/images/");
+      } else {
+        customImage.src = location.image;
+      }
       customImage.alt = location.name;
       customImage.style.width = "90%";
       customImage.style.borderRadius = "8px";
@@ -247,7 +252,7 @@ function addMarkers(locations) {
     if (!isMobile && !document.querySelector(".fundidor-img")) {
       const fundidorImg = document.createElement("img");
       fundidorImg.classList.add("fundidor-img");
-      fundidorImg.src = "./images/Fundidor_color.png";
+      fundidorImg.src = "./images/locations/images/Fundidor_color.png";
       fundidorImg.alt = "Fundidor";
       fundidorImg.style.position = "absolute";
       fundidorImg.style.top = "11vw";
