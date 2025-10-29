@@ -332,21 +332,19 @@ function addMarkers(locations) {
       fundidorElement = fundidorImg;
       fundidorAdded = true;
 
-      // Función para alinear y escalar el fundidor
+      // Alinear el fundidor a la esquina inferior derecha de la imagen del mapa
       function positionFundidor() {
-        const mapWidth = mapaContainer.offsetWidth;
-        const mapHeight = mapaContainer.offsetHeight;
-        const scrollX = document.getElementById('scroll-wrapper').scrollLeft || 0;
-        // Escala dinámica: más pequeño si la pantalla es estrecha
-        let scale = 0.8;
-        if (mapWidth < 900) scale = 0.5;
-        if (mapWidth < 600) scale = 0.35;
-        fundidorImg.style.height = `${scale * mapHeight}px`;
-        fundidorImg.style.left = `${mapWidth - fundidorImg.offsetWidth - scrollX}px`;
-        fundidorImg.style.top = `${mapHeight - fundidorImg.offsetHeight}px`;
+        const mapaFondo = document.getElementById('mapa-fondo');
+        if (!mapaFondo) return;
+        const fondoRect = mapaFondo.getBoundingClientRect();
+        const containerRect = mapaContainer.getBoundingClientRect();
+        // Calcula la posición relativa dentro del mapa
+        const left = fondoRect.width - fundidorImg.offsetWidth;
+        const top = fondoRect.height - fundidorImg.offsetHeight;
+        fundidorImg.style.left = `${left}px`;
+        fundidorImg.style.top = `${top}px`;
       }
       window.addEventListener('resize', positionFundidor);
-      document.getElementById('scroll-wrapper').addEventListener('scroll', positionFundidor);
       setTimeout(positionFundidor, 50);
     }
   });
