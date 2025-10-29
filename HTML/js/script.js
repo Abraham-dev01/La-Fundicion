@@ -90,7 +90,7 @@ function addMarkers(locations) {
   const mapHeight = mapaContainer.offsetHeight;
   let fundidorAdded = false;
 
-  locations.forEach((location) => {
+  locations.forEach((location, idx) => {
     // Crear un marcador (imagen)
     const marker = document.createElement("img");
     marker.classList.add("hamburguesa");
@@ -125,6 +125,40 @@ function addMarkers(locations) {
     closeButton.style.fontWeight = "bold";
     closeButton.style.cursor = "pointer";
 
+    // Crear el div de detalles
+    const detailsDiv = document.createElement("div");
+    detailsDiv.classList.add("project-details");
+    detailsDiv.style.position = "absolute";
+    detailsDiv.style.opacity = "0";
+    detailsDiv.style.transition = "opacity 0.2s ease";
+    detailsDiv.style.display = "none";
+
+    // Posicionamiento dinámico de la tarjeta cerca del marcador
+    function positionDetails() {
+      // Recalcular top/left en base al tamaño actual del mapa y marcador
+      const mapWidth = mapaContainer.offsetWidth;
+      const mapHeight = mapaContainer.offsetHeight;
+      const scrollX = document.getElementById('scroll-wrapper').scrollLeft || 0;
+      // Recalcular la posición del marcador
+      const top = (parseFloat(location.top) / 100) * mapHeight;
+      const left = (parseFloat(location.left) / 100) * mapWidth;
+      let detailsLeft = left + 130 - scrollX;
+      let detailsTop = top - 50;
+      const detailsWidth = 350;
+      if (detailsLeft + detailsWidth > mapWidth) {
+        detailsLeft = mapWidth - detailsWidth - 10;
+      }
+      if (detailsLeft < 0) detailsLeft = 10;
+      if (detailsTop < 0) detailsTop = 10;
+      if (detailsTop + 220 > mapHeight) detailsTop = mapHeight - 220;
+      detailsDiv.style.left = `${detailsLeft}px`;
+      detailsDiv.style.top = `${detailsTop}px`;
+    }
+
+    // Reposicionar al mostrar y al hacer scroll/resize
+    window.addEventListener('resize', positionDetails);
+    document.getElementById('scroll-wrapper').addEventListener('scroll', positionDetails);
+
     // Evento para cerrar el modal en móvil
     closeButton.addEventListener("click", () => {
       detailsDiv.style.display = "none";
@@ -133,36 +167,10 @@ function addMarkers(locations) {
       marker.style.transform = "scale(1)";
     });
 
-    // Crear el div de detalles
-    const detailsDiv = document.createElement("div");
-    if (window.innerWidth <= 460) {
-      detailsDiv.style.position = "fixed";
-      detailsDiv.style.top = "50%";
-      detailsDiv.style.left = "50%";
-      detailsDiv.style.transform = "translate(-50%, -50%)";
-      detailsDiv.style.width = "80%";
-      detailsDiv.style.height = "auto";
-      detailsDiv.style.backgroundColor = "white";
-      detailsDiv.style.zIndex = "999";
-      detailsDiv.style.display = "flex";
-      detailsDiv.style.flexDirection = "column";
-      detailsDiv.style.justifyContent = "flex-start";
-      detailsDiv.style.borderRadius = "8px";
-    } else {
-      detailsDiv.classList.add("project-details");
-      detailsDiv.style.position = "absolute";
-      detailsDiv.style.top = `calc(${top}px - 50px)`;
-      detailsDiv.style.left = `calc(${left}px + 130px)`;
-      detailsDiv.style.opacity = "0";
-      detailsDiv.style.transition = "opacity 0.2s ease";
-    }
-    detailsDiv.style.display = "none";
-
     // Hacer que toda la tarjeta sea clickeable y abra el link de maps SOLO si está visible
     detailsDiv.style.cursor = "pointer";
     detailsDiv.addEventListener("click", function (e) {
       if (e.target.tagName.toLowerCase() === "button") return;
-      // Solo abrir el link si la tarjeta está visible
       if (detailsDiv.style.display === "flex" || detailsDiv.style.opacity === "1") {
         window.open(location.link_maps, "_blank");
       }
@@ -177,7 +185,6 @@ function addMarkers(locations) {
 
     if (location.image) {
       const customImage = document.createElement("img");
-
       if (location.image.startsWith("./")) {
         customImage.src = location.image.replace(
           "./images/",
@@ -217,7 +224,6 @@ function addMarkers(locations) {
     textWrapper.appendChild(info);
     textWrapper.appendChild(address);
 
-    // Crear la imagen para cada sucursal
     textWrapper.style.width = "auto";
     textWrapper.style.top = "0px";
     textWrapper.style.margin = "5px";
@@ -226,7 +232,6 @@ function addMarkers(locations) {
     if (isMobile) {
       marker.addEventListener("click", () => {
         const isVisible = detailsDiv.style.display === "flex";
-        // Oculta si ya está visible
         if (isVisible) {
           marker.style.filter =
             "grayscale(1) sepia(1) saturate(0.5) contrast(0.6) brightness(0.8)";
@@ -239,17 +244,18 @@ function addMarkers(locations) {
           marker.style.filter = "none";
           marker.style.transform = "scale(1.2)";
           detailsDiv.style.display = "flex";
+          positionDetails();
           setTimeout(() => {
             detailsDiv.style.opacity = "1";
           }, 10);
         }
       });
     } else {
-      // Hover en escritorio
       marker.addEventListener("mouseenter", function () {
         marker.style.filter = "none";
         marker.style.transform = "scale(1.2)";
         detailsDiv.style.display = "flex";
+        positionDetails();
         setTimeout(() => {
           detailsDiv.style.opacity = "1";
         }, 10);
@@ -277,9 +283,8 @@ function addMarkers(locations) {
           }
         }, 100);
       });
+      detailsDiv.addEventListener("mouseleave", hideDetails);
     }
-
-    detailsDiv.addEventListener("mouseleave", hideDetails);
 
     container.appendChild(marker);
     container.appendChild(detailsDiv);
