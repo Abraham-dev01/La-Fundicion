@@ -6,15 +6,6 @@ function cargarMarcadores() {
   if (isMobile) {
     const mobileLocations = [
       {
-        name: "Sucursal Reforma",
-        top: "9%",
-        left: "17%",
-        info: "Edificio de oficinas con arquitectura moderna.",
-        address: "Calle Álamos #450, Colonia Reforma",
-        link_maps: "https://maps.app.goo.gl/xCS4PsYyp8WsjTnC9",
-        image: "./images/Fondo-div-info.png",
-      },
-      {
         name: "Sucursal San Martín",
         top: "45%",
         left: "8%",
@@ -44,7 +35,7 @@ function cargarMarcadores() {
     ];
     addMarkers(mobileLocations);
   } else {
-  fetch("./images/locations/json/locations.json")
+    fetch("./images/locations/json/locations.json")
       .then((response) => {
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -147,7 +138,10 @@ function addMarkers(locations) {
       const customImage = document.createElement("img");
 
       if (location.image.startsWith("./")) {
-        customImage.src = location.image.replace("./images/", "./images/locations/images/");
+        customImage.src = location.image.replace(
+          "./images/",
+          "./images/locations/images/"
+        );
       } else {
         customImage.src = location.image;
       }
@@ -157,6 +151,8 @@ function addMarkers(locations) {
       customImage.style.display = "block";
       if (isMobile) {
         customImage.style.marginTop = "5%";
+      } else {
+        customImage.style.marginTop = "10%";
       }
       coverContainer.appendChild(customImage);
     }
@@ -173,6 +169,7 @@ function addMarkers(locations) {
     address.innerHTML = `<strong>Ubicación:</strong> <a href = "${location.link_maps}" target="_blank">${location.address}</a>`;
     address.style.textDecoration = "none";
     address.style.padding = "0 15px";
+    address.style.paddingBottom = "15px";
 
     textWrapper.appendChild(coverContainer);
     textWrapper.appendChild(title);
