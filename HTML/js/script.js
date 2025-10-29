@@ -1,52 +1,83 @@
+let lastLocations = null;
+let lastIsMobile = null;
+let markerElements = [];
+let fundidorElement = null;
+
 function cargarMarcadores() {
   const isMobile = window.innerWidth <= 460;
   const container = document.getElementById("hamburguesas-container");
-  container.innerHTML = "";
+  const mapaContainer = document.getElementById("mapa-container");
 
-  if (isMobile) {
-    const mobileLocations = [
-      {
-        name: "Sucursal San Martín",
-        top: "45%",
-        left: "8%",
-        info: "Centro comercial con tiendas y restaurantes.",
-        address: "Carretera Internacional Km 130, Colonia Centro",
-        link_maps: "https://maps.app.goo.gl/Cfx8zjneRhvBEFMQ9",
-        image: "./images/Fondo-div-info.png",
-      },
-      {
-        name: "Sucursal Centro",
-        top: "26%",
-        left: "19%",
-        info: "Zona residencial con amplias áreas verdes.",
-        address: "Calle Álamos #450, Colonia Reforma",
-        link_maps: "https://maps.app.goo.gl/RrPyL556LtL4jtvSA",
-        image: "./images/Fondo-div-info.png",
-      },
-      {
-        name: "Sucursal Plaza del Valle",
-        top: "61%",
-        left: "19%",
-        info: "Zona residencial con amplias áreas verdes.",
-        address: "Fiallo #450, Colonia Centro",
-        link_maps: "https://maps.app.goo.gl/413MmaohaySkV1X56",
-        image: "./images/Fondo-div-info.png",
-      },
-    ];
-    addMarkers(mobileLocations);
-  } else {
-    fetch("./images/locations/json/locations.json")
-      .then((response) => {
-        if (!response.ok)
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        return response.json();
-      })
-      .then((data) => {
-        addMarkers(data);
-      })
-      .catch((error) =>
-        console.error("Error cargando las ubicaciones:", error)
-      );
+  // Si el modo (mobile/escritorio) cambió, o nunca se cargó, recrea todo
+  if (lastIsMobile !== isMobile || !lastLocations) {
+    container.innerHTML = "";
+    markerElements = [];
+    fundidorElement = null;
+    if (isMobile) {
+      lastLocations = [
+        {
+          name: "Sucursal San Martín",
+          top: "45%",
+          left: "8%",
+          info: "Centro comercial con tiendas y restaurantes.",
+          address: "Carretera Internacional Km 130, Colonia Centro",
+          link_maps: "https://maps.app.goo.gl/Cfx8zjneRhvBEFMQ9",
+          image: "./images/Fondo-div-info.png",
+        },
+        {
+          name: "Sucursal Centro",
+          top: "26%",
+          left: "19%",
+          info: "Zona residencial con amplias áreas verdes.",
+          address: "Calle Álamos #450, Colonia Reforma",
+          link_maps: "https://maps.app.goo.gl/RrPyL556LtL4jtvSA",
+          image: "./images/Fondo-div-info.png",
+        },
+        {
+          name: "Sucursal Plaza del Valle",
+          top: "61%",
+          left: "19%",
+          info: "Zona residencial con amplias áreas verdes.",
+          address: "Fiallo #450, Colonia Centro",
+          link_maps: "https://maps.app.goo.gl/413MmaohaySkV1X56",
+          image: "./images/Fondo-div-info.png",
+        },
+      ];
+      addMarkers(lastLocations);
+    } else {
+      fetch("./images/locations/json/locations.json")
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          return response.json();
+        })
+        .then((data) => {
+          lastLocations = data;
+          addMarkers(lastLocations);
+        })
+        .catch((error) =>
+          console.error("Error cargando las ubicaciones:", error)
+        );
+    }
+    lastIsMobile = isMobile;
+    return;
+  }
+
+  // Si el modo no cambió, solo actualiza posiciones
+  if (!lastLocations) return;
+  const mapWidth = mapaContainer.offsetWidth;
+  const mapHeight = mapaContainer.offsetHeight;
+  markerElements.forEach((marker, i) => {
+    const location = lastLocations[i];
+    const top = (parseFloat(location.top) / 100) * mapHeight;
+    const left = (parseFloat(location.left) / 100) * mapWidth;
+    marker.style.top = `${top}px`;
+    marker.style.left = `${left}px`;
+  });
+  if (fundidorElement) {
+    fundidorElement.style.top = `${0.11 * mapHeight}px`;
+    fundidorElement.style.right = `${0.01 * mapWidth}px`;
+    fundidorElement.style.height = `${0.8 * mapHeight}px`;
   }
 }
 
@@ -54,11 +85,9 @@ function cargarMarcadores() {
 function addMarkers(locations) {
   const isMobile = window.innerWidth <= 460;
   const container = document.getElementById("hamburguesas-container");
-  const map = document.querySelector("#mapa-fondo");
-
-  // Obtener el tamaño del contenedor (que puede cambiar al redimensionar la ventana)
-  const mapWidth = map.offsetWidth;
-  const mapHeight = map.offsetHeight;
+  const mapaContainer = document.getElementById("mapa-container");
+  const mapWidth = mapaContainer.offsetWidth;
+  const mapHeight = mapaContainer.offsetHeight;
   let fundidorAdded = false;
 
   locations.forEach((location) => {
@@ -68,15 +97,17 @@ function addMarkers(locations) {
     marker.src = "./images/locations/images/Hamburguesa.png";
     marker.alt = "Ubicación";
 
-    // Convertir los valores top/left a píxeles basados en el tamaño actual del contenedor
-    const top = (parseFloat(location.top) / 100) * mapHeight; // Convertir porcentaje a píxeles
-    const left = (parseFloat(location.left) / 100) * mapWidth; // Convertir porcentaje a píxeles
+    // Convertir los valores top/left a píxeles basados en el tamaño actual del mapa
+    const top = (parseFloat(location.top) / 100) * mapHeight;
+    const left = (parseFloat(location.left) / 100) * mapWidth;
 
     marker.style.filter =
       "grayscale(1) sepia(1) saturate(0.5) contrast(0.6) brightness(0.8)";
     marker.style.position = "absolute";
     marker.style.top = `${top}px`;
     marker.style.left = `${left}px`;
+    marker.style.pointerEvents = "auto";
+    markerElements.push(marker);
     marker.dataset.info = "location.info";
     marker.style.transition = "transform 0.2s ease, filter 0.2s ease";
 
@@ -126,6 +157,16 @@ function addMarkers(locations) {
       detailsDiv.style.transition = "opacity 0.2s ease";
     }
     detailsDiv.style.display = "none";
+
+    // Hacer que toda la tarjeta sea clickeable y abra el link de maps SOLO si está visible
+    detailsDiv.style.cursor = "pointer";
+    detailsDiv.addEventListener("click", function (e) {
+      if (e.target.tagName.toLowerCase() === "button") return;
+      // Solo abrir el link si la tarjeta está visible
+      if (detailsDiv.style.display === "flex" || detailsDiv.style.opacity === "1") {
+        window.open(location.link_maps, "_blank");
+      }
+    });
 
     // Crear el contenedor de texto
     const textWrapper = document.createElement("div");
@@ -220,6 +261,7 @@ function addMarkers(locations) {
 
       function hideDetails() {
         detailsDiv.style.opacity = "0";
+        detailsDiv.style.display = "none";
         marker.style.filter =
           "grayscale(1) sepia(1) saturate(0.5) contrast(0.6) brightness(0.8)";
       }
@@ -231,7 +273,6 @@ function addMarkers(locations) {
               "grayscale(1) sepia(1) saturate(0.5) contrast(0.6) brightness(0.8)";
             marker.style.transform = "scale(1)";
             detailsDiv.style.position = "absolute";
-
             hideDetails();
           }
         }, 100);
@@ -246,18 +287,20 @@ function addMarkers(locations) {
     if (isMobile) {
       detailsDiv.appendChild(closeButton);
     }
-    if (!isMobile && !document.querySelector(".fundidor-img")) {
+    if (!isMobile && !fundidorElement) {
       const fundidorImg = document.createElement("img");
       fundidorImg.classList.add("fundidor-img");
       fundidorImg.src = "./images/locations/images/Fundidor_color.png";
       fundidorImg.alt = "Fundidor";
       fundidorImg.style.position = "absolute";
-      fundidorImg.style.top = "11vw";
-      fundidorImg.style.right = "0.01vw";
+      fundidorImg.style.top = `${0.11 * mapHeight}px`;
+      fundidorImg.style.right = `${0.01 * mapWidth}px`;
       fundidorImg.style.zIndex = "15";
       fundidorImg.style.width = "auto";
-      fundidorImg.style.height = "80vh";
+      fundidorImg.style.height = `${0.8 * mapHeight}px`;
+      fundidorImg.style.pointerEvents = "none";
       container.appendChild(fundidorImg);
+      fundidorElement = fundidorImg;
       fundidorAdded = true;
     }
   });
@@ -268,13 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarMarcadores();
 
   window.addEventListener("resize", () => {
-    const anchoActual = window.innerWidth;
-    if (
-      (anchoAnterior > 460 && anchoActual <= 460) ||
-      (anchoAnterior <= 460 && anchoActual > 460)
-    ) {
-      cargarMarcadores();
-    }
-    anchoAnterior = anchoActual;
+    cargarMarcadores();
+    anchoAnterior = window.innerWidth;
   });
 });

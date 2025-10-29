@@ -51,7 +51,7 @@ body {
   z-index: 1;
 }
 
-.fundidor-img{
+.fundidor-img {
   z-index: -10;
 }
 
@@ -61,18 +61,70 @@ body {
   transition: opacity 0.3s ease;
 }
 
+
 .project-details {
+  box-sizing: border-box;
   position: absolute;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
-  width: 23%;
-  padding-top: 1%;
-  padding-bottom: 0px;
+  width: 350px;
+  max-width: 90vw;
+  min-width: 220px;
+  padding: 16px 18px;
   z-index: 10;
-  height: 44vh;
-  border-radius: 5px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  height: auto;
+}
+
+.project-details img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.project-details h3 {
+  font-size: 1.4em;
+  margin: 10px 0 4px 0;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-weight: 700;
+}
+
+.project-details p {
+  font-size: 1em;
+  margin: 4px 0;
+  padding: 0;
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .project-details {
+    width: 95vw;
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px 6px;
+    border-radius: 8px;
+  }
+
+  .project-details img {
+    max-width: 100vw;
+    margin-bottom: 8px;
+  }
+
+  .project-details h3 {
+    font-size: 1.1em;
+    margin: 8px 0 2px 0;
+  }
+
+  .project-details p {
+    font-size: 0.95em;
+  }
 }
 
 .project-details::before {
@@ -114,24 +166,29 @@ body {
   #mapa-container {
     min-width: 100vw;
   }
+
   .hamburguesa {
     min-width: 15%;
     height: auto;
   }
+
   #scroll-wrapper {
     overflow-x: hidden;
     overflow-y: hidden;
   }
+
   #mapa-container .modo-movil {
     min-width: unset;
   }
+
   #mapa-fondo {
     top: 0;
     left: -560px;
     width: auto;
     height: 100%;
     position: absolute;
-    filter: grayscale(50%); /* Aumentar o disminuir el nivel del filtro para móviles */
+    filter: grayscale(50%);
+    /* Aumentar o disminuir el nivel del filtro para móviles */
     z-index: -1;
   }
 }

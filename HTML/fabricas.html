@@ -168,7 +168,7 @@
 			============================================= -->
 		<section id="newsletter-1" class="mb-20 newsletter-section division">
 			<div class="container">
-				<div class="inner-bg bg-lightgrey">
+				<div class="inner-bg">
 					<div class="row">
 
 
@@ -198,10 +198,13 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div id="gmap">
-					<div id="scroll-wrapper">
-						<div id="mapa-container">
+					<div id="scroll-wrapper"
+						style="width:100vw; height:100vh; min-height:100vh; max-height:100vh; overflow:hidden;">
+						<div id="mapa-container"
+							style="position:relative; min-width:1500px; width:100vw; height:100vh; min-height:100vh; max-height:100vh; overflow:hidden; box-sizing:border-box;">
 							<img src="./images/locations/images/Mapa_sin_hamburguesas.png" alt="Mapa del fondo"
-								id="mapa-fondo">
+								id="mapa-fondo"
+								style="top:0; left:0; width:100%; height:100vh; min-height:100vh; max-height:100vh; position:absolute; object-fit:cover; filter:grayscale(50%); z-index:-1;">
 							<div id="hamburguesas-container"></div>
 						</div>
 					</div>
@@ -214,7 +217,7 @@
 			============================================= -->
 		<section id="newsletter-1" class="mb-20 newsletter-section division">
 			<div class="container">
-				<div class="inner-bg bg-lightgrey">
+				<div class="inner-bg">
 				</div> <!-- End Inner Bg -->
 			</div> <!-- End container -->
 		</section> <!-- END NEWSLETTER-1 -->
@@ -309,6 +312,30 @@
 
 	<!-- Script del mapa interactivo -->
 	<script src="js/script.js"></script>
+	<script>
+		// Fijar la altura inicial del mapa al cargar la página
+		document.addEventListener('DOMContentLoaded', function () {
+			var initialHeight = window.innerHeight;
+			var mapaContainer = document.getElementById('mapa-container');
+			var mapaFondo = document.getElementById('mapa-fondo');
+			var scrollWrapper = document.getElementById('scroll-wrapper');
+			if (mapaContainer) {
+				mapaContainer.style.height = initialHeight + 'px';
+				mapaContainer.style.minHeight = initialHeight + 'px';
+				mapaContainer.style.maxHeight = initialHeight + 'px';
+			}
+			if (mapaFondo) {
+				mapaFondo.style.height = initialHeight + 'px';
+				mapaFondo.style.minHeight = initialHeight + 'px';
+				mapaFondo.style.maxHeight = initialHeight + 'px';
+			}
+			if (scrollWrapper) {
+				scrollWrapper.style.height = initialHeight + 'px';
+				scrollWrapper.style.minHeight = initialHeight + 'px';
+				scrollWrapper.style.maxHeight = initialHeight + 'px';
+			}
+		});
+	</script>
 </body>
 
 
