@@ -53,7 +53,7 @@ body {
 
 .wide-100 { padding-top: 100px; padding-bottom: 100px; }
 .wide-90 { padding-top: 100px; padding-bottom: 90px; }
-.wide-80 { padding-top: 100px; padding-bottom: 80px; }
+.wide-80 { padding-top: 50px; padding-bottom: 80px; }
 .wide-70 { padding-top: 100px; padding-bottom: 70px; }
 .wide-60 { padding-top: 100px; padding-bottom: 60px; }
 .wide-50 { padding-top: 100px; padding-bottom: 50px; }
@@ -6274,6 +6274,62 @@ input[type=number]::-webkit-inner-spin-button {
 nav a#pull {  
   display: none;  
 } 
+
+
+
+/* ==============================================================
+  CUSTOM: Forzar que cada fila del menú tenga solo 3 elementos
+  Aplica a secciones #menu-6 y #menu-8 sin tocar otros usos de col-lg-3
+================================================== */
+@media (min-width: 992px) {
+  #menu-6 .row > [class*="col-lg-3"],
+  #menu-8 .row > [class*="col-lg-3"] {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
+/* Tamaño uniforme para imágenes destacadas del menú inicial */
+.menu-feature-img {
+  width: 100%;
+  height: 260px; /* Altura fija para homogeneizar */
+  object-fit: cover; /* Recorta manteniendo proporción y centra */
+  display: block;
+}
+
+/* Estilos para íconos de redes sociales en footer */
+.social-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f8f9fa;
+  border: 2px solid #000;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background-color: #ffc107;
+  transform: translateY(-2px);
+}
+
+.social-links a i {
+  font-size: 18px;
+  color: #333;
+}
+
+.social-links a:hover i {
+  color: #fff;
+}
 
 
 
