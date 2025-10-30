@@ -22,7 +22,7 @@ function cargarMarcadores() {
           info: "Centro comercial con tiendas y restaurantes.",
           address: "Carretera Internacional Km 130, Colonia Centro",
           link_maps: "https://maps.app.goo.gl/Cfx8zjneRhvBEFMQ9",
-          image: "./images/Fondo-div-info.png",
+          image: "./images/hlf-san-martin.jpg",
         },
         {
           name: "Sucursal Centro",
@@ -31,7 +31,7 @@ function cargarMarcadores() {
           info: "Zona residencial con amplias áreas verdes.",
           address: "Calle Álamos #450, Colonia Reforma",
           link_maps: "https://maps.app.goo.gl/RrPyL556LtL4jtvSA",
-          image: "./images/Fondo-div-info.png",
+          image: "./images/hlf-centro.jpg",
         },
         {
           name: "Sucursal Plaza del Valle",
@@ -40,7 +40,7 @@ function cargarMarcadores() {
           info: "Zona residencial con amplias áreas verdes.",
           address: "Fiallo #450, Colonia Centro",
           link_maps: "https://maps.app.goo.gl/413MmaohaySkV1X56",
-          image: "./images/Fondo-div-info.png",
+          image: "./images/hlf-plaza-del-valle.jpg",
         },
       ];
       addMarkers(lastLocations);
