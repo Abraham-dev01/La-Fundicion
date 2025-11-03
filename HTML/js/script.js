@@ -16,7 +16,7 @@ function cargarMarcadores() {
     if (isMobile) {
       lastLocations = [
         {
-          name: "Sucursal San Martín",
+          name: "Sucursal Atzompa",
           top: "45%",
           left: "8%",
           info: "Centro comercial con tiendas y restaurantes.",
