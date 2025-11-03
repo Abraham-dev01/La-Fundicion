@@ -97,9 +97,18 @@
 
 
 				<!-- LOGO IMAGE -->
-				<div class="logo" data-mobile-logo="images/logo-header.png" data-sticky-logo="images/logo-header.png">
-					<a href="#hero-1"><img src="images/logo-header.png" alt="header-logo" /></a>
-				</div>
+				   <div class="logo" data-mobile-logo="images/logo-header.png" data-sticky-logo="images/logo-header.png">
+					   <a href="#hero-1"><img id="logo-img" src="images/logo-header-2.png" alt="header-logo" /></a>
+				   </div>
+   <style>
+   /* Asegura que el logo y el header se muestren correctamente desde el inicio */
+   .logo img#logo-img {
+	   max-width: 180px;
+	   height: auto;
+	   display: block;
+	   margin: 0 auto;
+   }
+   </style>
 
 
 				<!-- BURGER MENU -->
@@ -959,8 +968,27 @@
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/jquery.ajaxchimp.min.js"></script>
 
-	<!-- Custom Script -->
-	<script src="js/custom.js"></script>
+
+	   <!-- Custom Script -->
+	   <script src="js/custom.js"></script>
+
+	   <!-- Alterna solo el logo cuando el scroll está arriba -->
+	   <script>
+	   document.addEventListener('DOMContentLoaded', function() {
+		   var logoImg = document.getElementById('logo-img');
+		   var logoDefault = 'images/logo-header.png';
+		   var logoAlt = 'images/logo-header-2.png';
+		   function updateLogo() {
+			   if(window.scrollY === 0) {
+				   logoImg.src = logoAlt;
+			   } else {
+				   logoImg.src = logoDefault;
+			   }
+		   }
+		   window.addEventListener('scroll', updateLogo);
+		   updateLogo();
+	   });
+	   </script>
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 	<!-- [if lt IE 9]>
