@@ -979,13 +979,14 @@
 		   var logoDefault = 'images/logo-header.png';
 		   var logoAlt = 'images/logo-header-2.png';
 		   function updateLogo() {
-			   if(window.scrollY === 0) {
+			   if(window.innerWidth > 1215 && window.scrollY === 0) {
 				   logoImg.src = logoAlt;
 			   } else {
 				   logoImg.src = logoDefault;
 			   }
 		   }
 		   window.addEventListener('scroll', updateLogo);
+		   window.addEventListener('resize', updateLogo);
 		   updateLogo();
 	   });
 	   </script>
